@@ -21,9 +21,10 @@ A Django-based microservice for handling financial transactions with asynchronou
 ### Local Development Setup
 
 1. Clone the repository:
-2. make build && make run 
-3. create wallets from db
-4. request POST `http://localhost:8000/api/stransfer`
+2. Fill env files
+3. make build && make run 
+4. create wallets from db
+5. request POST `http://localhost:8000/api/stransfer`
 ```python 
 data={"from_wallet_id": "some_number", "to_wallet_id": "some_number", "amount": "100"}
 ```
