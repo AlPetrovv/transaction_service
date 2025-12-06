@@ -10,7 +10,11 @@ COMMISSION = Decimal('0.1')
 
 @transaction.atomic
 def make_transfer(from_wallet_id: int, to_wallet_id: int, amount: Decimal) -> Transaction:
+    """Make transfer.
 
+    If amount < 1000, transfer without commission
+    Else Take 10 % from amount
+    """
     if amount < Decimal('1000'):
         tx = transfer(from_wallet_id=from_wallet_id, to_wallet_id=to_wallet_id, amount=amount)
         return tx
