@@ -33,3 +33,5 @@ data={"from_wallet_id": "some_number", "to_wallet_id": "some_number", "amount": 
 1. Logs(logging, loguru, grafana, Prometheus)
 2. Tests(pytest + unittest) 
 3. github actions 
+4. Linters
+5. docs 
