@@ -1,9 +1,9 @@
 from django.apps import AppConfig
 
 
-class ReportsConfig(AppConfig):
+class TransfersAppConfig(AppConfig):
     name = "app"
     verbose_name = "Transfers"
 
     def ready(self):
-        import app.signals
+        from . import signals  # noqa: F401

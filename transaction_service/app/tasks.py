@@ -1,23 +1,22 @@
 import logging
-import random
-import time
 
-from transaction_service.celery import app
+from celery import shared_task
 
 logger = logging.getLogger(__name__)
 
-@app.task(bind=True, max_retries=3, default_retry_delay=10)
-def send_notification(self):
-    try:
-        raise_error = random.choice([True, False])
-        if raise_error:
-            logger.error("send_notification error", exc_info=True)
-            raise ValueError("Something went wrong")
-        time.sleep(5)
-        logger.info("Notification sent")
-    except Exception as exc:
-        raise self.retry(exc=exc)
 
+@shared_task(
+    bind=True,
+    max_retries=3,
+    default_retry_delay=10,
+    autoretry_for=(Exception,),
+    retry_backoff=True,
+    retry_jitter=True,
+)
+def send_notification(self, transaction_id: int) -> None:
+    """Dispatch a notification for the given transaction.
 
-
-
+    Body is intentionally a no-op until a real notification channel is wired
+    in. We log so we can observe the call surface in dev environments.
+    """
+    logger.info("Notification dispatched for transaction %s", transaction_id)
